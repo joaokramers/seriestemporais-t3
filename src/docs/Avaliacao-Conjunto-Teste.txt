@@ -1,0 +1,103 @@
+Avaliacao do conjunto de teste
+
+ # teste
+> # ----------------------------------------------
+> X.t             <- t.mensal$X.t
+> fit <- sarima(X.t,BIC[2,2],0,BIC[2,3],P=BIC[2,4],
++               D=1,Q=BIC[2,5],S=12,no.constant=TRUE)
+initial  value 10.687207 
+iter   2 value 10.542398
+iter   3 value 10.480072
+iter   4 value 10.415957
+iter   5 value 10.383885
+iter   6 value 10.360886
+iter   7 value 10.347626
+iter   8 value 10.344958
+iter   9 value 10.332948
+iter  10 value 10.329663
+iter  11 value 10.327480
+iter  12 value 10.327033
+iter  13 value 10.327015
+iter  14 value 10.326998
+iter  15 value 10.326989
+iter  16 value 10.326988
+iter  17 value 10.326987
+iter  17 value 10.326987
+iter  17 value 10.326987
+final  value 10.326987 
+converged
+initial  value 10.315430 
+iter   2 value 10.313243
+iter   3 value 10.312054
+iter   4 value 10.311836
+iter   5 value 10.311680
+iter   6 value 10.311540
+iter   7 value 10.311498
+iter   8 value 10.311392
+iter   9 value 10.311355
+iter  10 value 10.311348
+iter  11 value 10.311348
+iter  11 value 10.311348
+iter  11 value 10.311348
+final  value 10.311348 
+converged
+<><><><><><><><><><><><><><>
+ 
+Coefficients: 
+     Estimate     SE t.value p.value
+ar1    0.9257 0.0487 19.0037  0.0000
+ma1   -0.5615 0.1130 -4.9691  0.0000
+sar1  -0.1585 0.1110 -1.4281  0.1553
+sar2  -0.2956 0.0968 -3.0554  0.0027
+sma1  -0.6459 0.1082 -5.9698  0.0000
+
+sigma^2 estimated as 827769297 on 151 degrees of freedom 
+ 
+AIC = 23.5375  AICc = 23.54006  BIC = 23.6548 
+ 
+> fit
+$fit
+
+Call:
+arima(x = xdata, order = c(p, d, q), seasonal = list(order = c(P, D, Q), period = S), 
+    include.mean = !no.constant, transform.pars = trans, fixed = fixed, optim.control = list(trace = trc, 
+        REPORT = 1, reltol = tol))
+
+Coefficients:
+         ar1      ma1     sar1     sar2     sma1
+      0.9257  -0.5615  -0.1585  -0.2956  -0.6459
+s.e.  0.0487   0.1130   0.1110   0.0968   0.1082
+
+sigma^2 estimated as 827769297:  log likelihood = -1829.92,  aic = 3671.85
+
+$degrees_of_freedom
+[1] 151
+
+$ttable
+     Estimate     SE t.value p.value
+ar1    0.9257 0.0487 19.0037  0.0000
+ma1   -0.5615 0.1130 -4.9691  0.0000
+sar1  -0.1585 0.1110 -1.4281  0.1553
+sar2  -0.2956 0.0968 -3.0554  0.0027
+sma1  -0.6459 0.1082 -5.9698  0.0000
+
+$ICs
+     AIC     AICc      BIC 
+23.53750 23.54006 23.65480 
+
+> residuals <-  as.numeric(unlist(fit$fit[8]))
+> shapiro.test(residuals)
+
+	Shapiro-Wilk normality test
+
+data:  residuals
+W = 0.90257, p-value = 4.228e-09
+
+> quantis <- quantile(na.omit(residuals), c(0.025, 0.975))
+> t.mensal$X.hat     <- X.t - residuals
+> t.mensal$X.hat[1:t.size] <- NA
+> Fig.temp + geom_line(data=t.mensal,mapping = aes(x = mes, y = X.hat), linewidth=1.2, col = "red")
+Houve 21 avisos (use warnings() para vê-los)
+> (MAPE <- mean(abs((t.mensal$X.hat-t.mensal$X.t)/t.mensal$X.t),na.rm=T)*100)
+[1] 7.275643
+Houve 36 avisos (use warnings() para vê-los)

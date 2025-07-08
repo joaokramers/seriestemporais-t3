@@ -1,0 +1,55 @@
+Procedimento para esoclha do modelo com base no BIC
+
+# ========================================================================
+# Treinamento
+# ------------------------------------------
+n.size          <- dim(t.mensal)[1]
+t.size          <- ceiling(n.size/2)
+X.t             <- t.mensal$x[1:t.size]
+
+
+# -----------------------------------------------------------------------------------------
+# determinação da ordem do modelo da série de treinamento
+# -----------------------------------------------------------------------------------------
+BIC     <- NULL
+grid    <- 0:5
+Grid    <- 0:2
+for (p.grid in rev(grid)){
+  for (q.grid in rev(grid)){
+    for (P.grid in Grid){
+      for (Q.grid in Grid){
+        tryCatch({
+          draft <-sarima( X.t, p.grid,  0,  q.grid,
+                          P=P.grid,D = 1 ,Q=Q.grid,S=12,
+                          no.constant=TRUE,details=FALSE)
+          
+          BIC   <- rbind( BIC, c(BIC = unlist(draft[4])[3], 
+                                 p = p.grid, q = q.grid, P = P.grid, Q = Q.grid))
+        }, error=function(e){})
+      }}}}
+
+
+
+# listagem dos 10 melhores modelos
+# ----------------------------------
+BIC <- data.frame(BIC) 
+BIC <- BIC[order(BIC$BIC.ICs.BIC),]
+BIC[1:10,]
+# ----------------------------------
+> # listagem dos 10 melhores modelos
+> # ----------------------------------
+> BIC <- data.frame(BIC) 
+> BIC <- BIC[order(BIC$BIC.ICs.BIC),]
+> BIC[1:10,]
+    BIC.ICs.BIC p q P Q
+219    23.89191 1 1 0 1
+225    23.93407 1 1 2 1
+210    23.94867 1 2 0 1
+167    23.94909 2 1 0 1
+220    23.94975 1 1 0 2
+222    23.95043 1 1 1 1
+226    23.95390 1 1 2 2
+223    23.95431 1 1 1 2
+224    23.97801 1 1 2 0
+216    23.98901 1 2 2 1
+> 

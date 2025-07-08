@@ -1,0 +1,175 @@
+Teste de normalidade dos residuos
+
+r.t <- resid(fit$fit)
+> fac   <- acf(r.t, lag = 60, plot = FALSE)
+> Fig.2 <- with(fac, data.frame(lag, acf))
+> Fig.2 <- rbind(c(0,1),Fig.2)
+> facp   <- pacf(r.t, lag = 60, plot = FALSE)
+> Fig.3 <- with(facp, data.frame(lag, acf))
+> Fig.3 <- rbind(c(0,1),Fig.3)
+> Fig.acf <- ggplot(data = Fig.2, mapping = aes(x = lag, y = acf)) +
++   geom_hline(aes(yintercept = 0)) +
++   geom_segment(mapping = aes(xend = lag, yend = 0), size=2)+
++   ggtitle("FAC residual") +
++   xlab(expression(italic(h)))+
++   ylab(expression(paste(rho)[italic(h)]))+
++   theme(text=element_text(family="Times New Roman",size=21,colour="black")
++         ,axis.title.y=element_text(family="Times New Roman",angle=90,size=22, 
++                                    colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,
++                                                                             unit = "pt")),axis.title.x = element_text(family = "Times New Roman",
++                                                                                                                       vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,
++                                    colour="black")) 
+> conf.lim <- 2/sqrt(fac$n.used)
+> Fig.acf + geom_hline(aes(yintercept =  conf.lim), linetype="dotted", 
++                      size = 2, color = "red") +
++   geom_hline(aes(yintercept = -conf.lim), linetype="dotted", 
++              size = 2, color = "red") 
+Houve 22 avisos (use warnings() para vê-los)
+> Fig.2
+   lag           acf
+1    0  1.0000000000
+2    1 -0.0618372380
+3    2 -0.0011141325
+4    3  0.0208756404
+5    4  0.0403275137
+6    5 -0.0844141396
+7    6  0.1755168663
+8    7 -0.0610125354
+9    8 -0.0532610773
+10   9  0.0881830282
+11  10 -0.0348931478
+12  11 -0.0921559813
+13  12 -0.1151760472
+14  13  0.1698823913
+15  14 -0.0535638882
+16  15  0.0331097047
+17  16 -0.1277676176
+18  17 -0.0412112084
+19  18 -0.2152866758
+20  19  0.0937777120
+21  20 -0.0048482567
+22  21  0.0460994315
+23  22  0.0951656748
+24  23 -0.0007666734
+25  24 -0.2019010439
+26  25  0.1062658991
+27  26  0.0643814218
+28  27 -0.0285131268
+29  28  0.0422773275
+30  29  0.0485022472
+31  30 -0.0010578338
+32  31 -0.0451039397
+33  32  0.0581259423
+34  33 -0.0859677046
+35  34  0.0256301774
+36  35 -0.0711091368
+37  36 -0.0290391879
+38  37 -0.1092906097
+39  38 -0.0474662463
+40  39 -0.0533714989
+41  40 -0.0905318805
+42  41 -0.0309592710
+43  42 -0.0629783245
+44  43 -0.0365201059
+45  44  0.0131426760
+46  45 -0.0049142799
+47  46 -0.0797311508
+48  47  0.1473957990
+49  48 -0.0937118814
+50  49  0.0223976026
+51  50  0.0146886034
+52  51  0.0097455355
+53  52  0.0199495983
+54  53  0.0168423351
+55  54  0.0288053191
+56  55  0.0092307880
+57  56 -0.0027725891
+58  57 -0.0091358976
+59  58  0.0677071145
+60  59  0.0118273461
+61  60  0.0346574402
+Houve 42 avisos (use warnings() para vê-los)
+> Fig.pacf <- ggplot(data = Fig.3, mapping = aes(x = lag, y = acf)) +
++   geom_hline(aes(yintercept = 0)) +
++   geom_segment(mapping = aes(xend = lag, yend = 0), size=2)+
++   ggtitle("FACP residual") +
++   xlab(expression(italic(h)))+
++   ylab(expression(paste(phi)[italic(hh)]))+
++   theme(text=element_text(family="Times New Roman",size=21,colour="black")
++         ,axis.title.y=element_text(family="Times New Roman",angle=90,size=22, 
++                                    colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,
++                                                                             unit = "pt")),axis.title.x = element_text(family = "Times New Roman",
++                                                                                                                       vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,
++                                    colour="black")) 
+> Fig.pacf + geom_hline(aes(yintercept =  conf.lim), linetype="dotted", 
++                       size = 2, color = "red") +
++   geom_hline(aes(yintercept = -conf.lim), linetype="dotted", 
++              size = 2, color = "red") 
+Houve 24 avisos (use warnings() para vê-los)
+> Fig.3
+   lag          acf
+1    0  1.000000000
+2    1 -0.061837238
+3    2 -0.004956931
+4    3  0.020579076
+5    4  0.043075069
+6    5 -0.079600352
+7    6  0.167278975
+8    7 -0.046763150
+9    8 -0.057087939
+10   9  0.086068601
+11  10 -0.048687388
+12  11 -0.066010203
+13  12 -0.164480369
+14  13  0.176662523
+15  14 -0.010884762
+16  15 -0.002655907
+17  16 -0.123214699
+18  17 -0.051832564
+19  18 -0.184765217
+20  19  0.003596899
+21  20  0.051995989
+22  21  0.076740165
+23  22  0.118361586
+24  23 -0.034142855
+25  24 -0.176898661
+26  25  0.107273975
+27  26  0.029376779
+28  27  0.016817392
+29  28 -0.052567444
+30  29  0.056957197
+31  30  0.037332693
+32  31 -0.047256342
+33  32  0.027437302
+34  33 -0.026458346
+35  34 -0.054652015
+36  35 -0.204191917
+37  36 -0.102719868
+38  37  0.053484837
+39  38 -0.056786608
+40  39 -0.011419287
+41  40 -0.147585826
+42  41 -0.013046428
+43  42 -0.173013372
+44  43 -0.032431230
+45  44  0.095639532
+46  45  0.009326589
+47  46 -0.032937208
+48  47  0.064861845
+49  48 -0.101585241
+50  49  0.057086239
+51  50 -0.018660985
+52  51 -0.058582399
+53  52 -0.020789653
+54  53 -0.085456624
+55  54  0.013751722
+56  55  0.021330120
+57  56 -0.035648671
+58  57 -0.024358302
+59  58 -0.039712428
+60  59 -0.019458212
+61  60 -0.038538923
+Houve 46 avisos (use warnings() para vê-los)
+> 

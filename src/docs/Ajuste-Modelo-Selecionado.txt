@@ -1,0 +1,181 @@
+Ajuste do modelo selecionado
+
+
+fit  <- sarima(X.t,BIC[2,2],0,BIC[2,3],
+               P=BIC[2,4],D=1,Q=BIC[2,5],S=12,no.constant=TRUE)
+
+fit  <- sarima(X.t,BIC[2,2],0,BIC[2,3],
++                P=BIC[2,4],D=1,Q=BIC[2,5],S=12,no.constant=TRUE)
+initial  value 10.746761 
+iter   2 value 10.667485
+iter   3 value 10.640110
+iter   4 value 10.607300
+iter   5 value 10.571618
+iter   6 value 10.557042
+iter   7 value 10.540506
+iter   8 value 10.529105
+iter   9 value 10.509744
+iter  10 value 10.507936
+iter  11 value 10.491076
+iter  12 value 10.488485
+iter  13 value 10.481131
+iter  14 value 10.467918
+iter  15 value 10.464614
+iter  16 value 10.461377
+iter  17 value 10.456569
+iter  18 value 10.450862
+iter  19 value 10.432550
+iter  20 value 10.427034
+iter  21 value 10.412217
+iter  22 value 10.393159
+iter  23 value 10.390170
+iter  24 value 10.386622
+iter  25 value 10.379907
+iter  26 value 10.378872
+iter  27 value 10.372719
+iter  28 value 10.327913
+iter  29 value 10.326803
+iter  30 value 10.315858
+iter  31 value 10.305136
+iter  31 value 10.305136
+iter  32 value 10.301111
+iter  33 value 10.297989
+iter  34 value 10.297910
+iter  35 value 10.297748
+iter  36 value 10.297687
+iter  37 value 10.297560
+iter  38 value 10.297488
+iter  39 value 10.297334
+iter  40 value 10.297272
+iter  41 value 10.297136
+iter  42 value 10.297070
+iter  43 value 10.296917
+iter  44 value 10.296857
+iter  45 value 10.296715
+iter  46 value 10.296653
+iter  47 value 10.296501
+iter  48 value 10.296443
+iter  49 value 10.296297
+iter  50 value 10.296239
+iter  51 value 10.296085
+iter  52 value 10.296031
+iter  53 value 10.295880
+iter  54 value 10.295827
+iter  55 value 10.295670
+iter  56 value 10.295620
+iter  57 value 10.295464
+iter  58 value 10.295417
+iter  59 value 10.295255
+iter  60 value 10.295211
+iter  61 value 10.295050
+iter  62 value 10.295008
+iter  63 value 10.294842
+iter  64 value 10.294804
+iter  65 value 10.294637
+iter  66 value 10.294602
+iter  67 value 10.294430
+iter  68 value 10.294398
+iter  69 value 10.294225
+iter  70 value 10.294197
+iter  71 value 10.294019
+iter  72 value 10.293994
+iter  73 value 10.293815
+iter  74 value 10.293794
+iter  75 value 10.293609
+iter  76 value 10.293592
+iter  77 value 10.293405
+iter  78 value 10.293393
+iter  79 value 10.293200
+iter  80 value 10.293192
+iter  81 value 10.292997
+iter  82 value 10.292994
+iter  83 value 10.292792
+iter  84 value 10.292680
+iter  84 value 10.292680
+iter  85 value 10.292679
+iter  86 value 10.292581
+iter  87 value 10.292579
+iter  88 value 10.292578
+iter  88 value 10.292578
+iter  89 value 10.292576
+iter  90 value 10.292521
+iter  91 value 10.292519
+iter  92 value 10.292489
+iter  93 value 10.292489
+iter  94 value 10.292421
+iter  95 value 10.292419
+iter  96 value 10.292401
+iter  96 value 10.292401
+iter  97 value 10.292395
+iter  98 value 10.292347
+iter  99 value 10.292346
+iter 100 value 10.292305
+final  value 10.292305 
+stopped after 100 iterations
+initial  value 10.646987 
+iter   2 value 10.562714
+iter   3 value 10.537484
+iter   4 value 10.530934
+iter   5 value 10.523428
+iter   6 value 10.510619
+iter   7 value 10.472356
+iter   8 value 10.464222
+iter   9 value 10.429223
+iter  10 value 10.410729
+iter  11 value 10.396149
+iter  12 value 10.389533
+iter  13 value 10.385025
+iter  14 value 10.381495
+iter  15 value 10.377410
+iter  16 value 10.376326
+iter  17 value 10.375381
+iter  18 value 10.375064
+iter  19 value 10.374298
+iter  20 value 10.373861
+iter  21 value 10.373415
+iter  22 value 10.372367
+iter  23 value 10.371853
+iter  24 value 10.371771
+iter  25 value 10.371706
+iter  26 value 10.371656
+iter  27 value 10.371606
+iter  28 value 10.371558
+iter  29 value 10.371506
+iter  30 value 10.371441
+iter  31 value 10.371314
+iter  32 value 10.371061
+iter  33 value 10.370731
+iter  34 value 10.370277
+iter  35 value 10.370219
+iter  36 value 10.370157
+iter  37 value 10.370142
+iter  38 value 10.370140
+iter  39 value 10.370139
+iter  40 value 10.370138
+iter  41 value 10.370132
+iter  42 value 10.370120
+iter  43 value 10.370091
+iter  44 value 10.370038
+iter  45 value 10.369957
+iter  46 value 10.369938
+iter  47 value 10.369915
+iter  48 value 10.369905
+iter  49 value 10.369903
+iter  49 value 10.369903
+iter  49 value 10.369903
+final  value 10.369903 
+converged
+<><><><><><><><><><><><><><>
+ 
+Coefficients: 
+     Estimate     SE  t.value p.value
+ar1    0.9995 0.0047 210.9056  0.0000
+ma1   -0.7402 0.0832  -8.8951  0.0000
+sar1  -0.1637 0.1360  -1.2039  0.2329
+sar2  -0.3908 0.1436  -2.7211  0.0083
+sma1  -0.9599 0.1980  -4.8485  0.0000
+
+sigma^2 estimated as 656485113 on 67 degrees of freedom 
+ 
+AIC = 23.74435  AICc = 23.75698  BIC = 23.93407 
+ 

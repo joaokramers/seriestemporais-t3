@@ -1,0 +1,102 @@
+# ========================================================================
+> # Assessing seazonal nonstationarity
+> # ========================================================================
+> t.mensal$month <- as.numeric(t.mensal$month)
+> t.mensal$H1c<- cos(2*pi*t.mensal$month/12)
+> t.mensal$H1s<- sin(2*pi*t.mensal$month/12)
+> t.mensal$H2c<- cos(2*pi*t.mensal$month/6)
+> t.mensal$H2s<- sin(2*pi*t.mensal$month/6)
+> t.mensal$H3c<- cos(2*pi*t.mensal$month/4)
+> t.mensal$H3s<- sin(2*pi*t.mensal$month/4)
+> t.mensal$H4c<- cos(2*pi*t.mensal$month/3)
+> t.mensal$H4s<- sin(2*pi*t.mensal$month/3)
+> profile <- lm(X.t ~ H1c + H1s + H2c + H2s +
++                 H3c + H3s + H4c + H4s, 
++               data = t.mensal)
+> summary(profile)
+
+Call:
+lm(formula = X.t ~ H1c + H1s + H2c + H2s + H3c + H3s + H4c + 
+    H4s, data = t.mensal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-135082  -22075    -468   20327  131829 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   291958       2737 106.662  < 2e-16 ***
+H1c            21080       3871   5.446 1.92e-07 ***
+H1s            -4990       3871  -1.289  0.19922    
+H2c            20032       3871   5.175 6.79e-07 ***
+H2s            20104       3871   5.193 6.24e-07 ***
+H3c            11972       3871   3.093  0.00234 ** 
+H3s             5962       3871   1.540  0.12550    
+H4c             1939       3871   0.501  0.61717    
+H4s            21508       3871   5.556 1.14e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 35480 on 159 degrees of freedom
+Multiple R-squared:  0.4462,	Adjusted R-squared:  0.4184 
+F-statistic: 16.02 on 8 and 159 DF,  p-value: < 2.2e-16
+
+> profile <- lm(X.t ~ H1c + H2c + H2s + H3c + H4s,
++               data = t.mensal)
+> summary(profile)
+
+Call:
+lm(formula = X.t ~ H1c + H2c + H2s + H3c + H4s, data = t.mensal)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-140373  -22334    2142   19435  133767 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   291958       2748 106.241  < 2e-16 ***
+H1c            21080       3886   5.424 2.08e-07 ***
+H2c            20032       3886   5.154 7.33e-07 ***
+H2s            20104       3886   5.173 6.73e-07 ***
+H3c            11972       3886   3.080  0.00243 ** 
+H4s            21508       3886   5.534 1.23e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 35620 on 162 degrees of freedom
+Multiple R-squared:  0.4313,	Adjusted R-squared:  0.4138 
+F-statistic: 24.57 on 5 and 162 DF,  p-value: < 2.2e-16
+
+> M   <- 1:12
+> H1c <- cos(2*pi*M/12)
+> H1s <- sin(2*pi*M/12)
+> H2c <- cos(2*pi*M/6)
+> H2s <- sin(2*pi*M/6)
+> H3c <- cos(2*pi*M/4)
+> H3s <- sin(2*pi*M/4)
+> H4c <- cos(2*pi*M/3)
+> H4s <- sin(2*pi*M/3)
+> Ano <- data.frame(H1c, H2c, H2s, H3c, H4s)
+> perfil <- predict(profile,Ano)
+> previsao <- data.frame(M, perfil)
+> # ========================================================================
+> # Figure 1
+> # ========================================================================
+> Fig.perfil <- ggplot(data = t.mensal) +
++   geom_line(aes(x = month, y =X.t, color = as.factor(year)),linewidth=1) +
++   ggtitle("Perfil Sazonal") +
++   xlab(expression(italic(t)))+
++   ylab(expression(italic(Y[t])))+
++   theme(text=element_text(family="Times New Roman",size=21,colour="black")
++         ,axis.title.y=element_text(family="Times New Roman",angle=90,size=22, 
++                                    colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,
++                                                                             unit = "pt")),axis.title.x = element_text(family = "Times New Roman",
++                                                                                                                       vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,
++                                    colour="black"), legend.position = "none"
++   ) 
+> Fig.perfil
+Houve 19 avisos (use warnings() para vê-los)
+> Fig.perfil + scale_x_discrete(limits = factor(1:12)) +   geom_line(data = previsao, aes(x =M, y = perfil), linewidth=3) 
+Houve 50 ou mais avisos (use warnings() para ver os primeiros 50)
+> 

@@ -1,0 +1,35 @@
+Previsao Fluxo Mensal Ultimos 12 meses
+
+# ----------------------------------------------
+> # Previsao
+> # ----------------------------------------------
+> fit <- sarima.for(as.ts(t.mensal$X.t),n.ahead = 12, 
++                   BIC[2,2],0,BIC[2,3],P=BIC[2,4],D=1,Q=BIC[2,5],S=12,
++                   no.constant=TRUE, plot.all = TRUE)
+> X.t   <- c(t.mensal$X.t[(n.size - 11):n.size], rep(NA,12))
+> X.hat <- c(rep(NA,12), as.numeric(fit$pred))
+> se    <- c(rep(NA,12), as.numeric(fit$se))
+> mes   <- seq(1:length(X.t))
+> Preds <- data.frame(mes,X.t,X.hat,se)
+> # ========================================================================
+> # Figure pred
+> # ========================================================================
+> Fig.pred <- ggplot(data = Preds, aes(x = mes, y = X.t)) +
++   geom_line(linewidth=1.2) +
++   ggtitle("Fluxo Mensal (últimos 12 meses)") +
++   xlab(expression(italic(t)))+
++   ylab(expression(italic(Y[t])))+
++   theme(text=element_text(family="Times New Roman",size=21,colour="black")
++         ,axis.title.y=element_text(family="Times New Roman",angle=90,size=22, 
++                                    colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,
++                                                                             unit = "pt")),axis.title.x = element_text(family = "Times New Roman",
++                                                                                                                       vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,
++                                    colour="black")) 
+> Fig.pred + 
++   geom_line(data=Preds, aes(x = mes, y = X.hat), linewidth=1.2, col = "red") +
++   #geom_line(data=Preds, aes(x = mes, y = X.hat +2*se), linetype="dotted",  color = "blue", size=1.5) +
++   #geom_line(data=Preds, aes(x = mes, y = X.hat -2*se), linetype="dotted",  color = "blue", size=1.5) +
++   geom_ribbon(data=Preds,aes(ymin=X.hat -2*se,ymax=X.hat +2*se), fill="grey", alpha=0.5)
+Houve 21 avisos (use warnings() para vê-los)
+

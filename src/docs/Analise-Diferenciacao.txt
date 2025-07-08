@@ -1,0 +1,136 @@
+X.t         <- diff(t.mensal$X.t, lag = 12)
+Houve 36 avisos (use warnings() para vê-los)
+> t.mensal$dif <- c(rep(NA,12),X.t)
+> Fig.dif <- ggplot(data = t.mensal, mapping = aes(x = mes, y = dif)) +
++   geom_line(size=1.2) +
++   ggtitle("Variação do Fluxo Mensal") +
++   xlab(expression(italic(t)))+
++   ylab(expression(paste(nabla)*italic(Y[t])))+
++   geom_hline(yintercept=0, linetype="dashed", color = "blue", size=1)+
++   theme(text = element_text(family = "Times New Roman", size=21,colour="black")
++         ,axis.title.y = element_text(family = "Times New Roman", angle=90, size=22, colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,  unit = "pt"))
++         ,axis.title.x = element_text(family = "Times New Roman",vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,colour="black")
++   ) 
+> Fig.dif
+Houve 25 avisos (use warnings() para vê-los)
+> fac   <- acf(X.t, lag = 60, plot = FALSE)
+Houve 46 avisos (use warnings() para vê-los)
+> Fig.2 <- with(fac, data.frame(lag, acf))
+> Fig.2 <- rbind(c(0,1),Fig.2)
+> facp   <- pacf(X.t, lag = 60, plot = FALSE)
+> Fig.3 <- with(facp, data.frame(lag, acf))
+> Fig.3 <- rbind(c(0,1),Fig.3)
+> Fig.acf <- ggplot(data = Fig.2, mapping = aes(x = lag, y = acf)) +
++   geom_hline(aes(yintercept = 0)) +
++   geom_segment(mapping = aes(xend = lag, yend = 0), size=2)+
++   ggtitle("FAC da primeira diferença") +
++   xlab(expression(italic(h)))+
++   ylab(expression(paste(rho)[italic(h)]))+
++   theme(text=element_text(family="Times New Roman",size=21,colour="black")
++         ,axis.title.y=element_text(family="Times New Roman",angle=90,size=22, 
++                                    colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,
++                                                                             unit = "pt")),axis.title.x = element_text(family = "Times New Roman",
++                                                                                                                       vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,
++                                    colour="black")) 
+> conf.lim <- 2/sqrt(fac$n.used)
+> Fig.acf + geom_hline(aes(yintercept =  conf.lim), linetype="dotted", 
++                      size = 2, color = "red") +
++   geom_hline(aes(yintercept = -conf.lim), linetype="dotted", 
++              size = 2, color = "red") 
+Houve 22 avisos (use warnings() para vê-los)
+> Fig.acf + geom_hline(aes(yintercept =  conf.lim), linetype="dotted", 
+Houve 42 avisos (use warnings() para vê-los)
++                      size = 2, color = "red") +
++   geom_hline(aes(yintercept = -conf.lim), linetype="dotted", 
++              size = 2, color = "red") 
+Houve 22 avisos (use warnings() para vê-los)
+> Fig.2
+   lag          acf
+1    0  1.000000000
+2    1  0.356453669
+3    2  0.306803155
+4    3  0.178546860
+5    4  0.153792841
+6    5  0.051063906
+7    6  0.163247972
+8    7  0.110006533
+9    8  0.133190049
+10   9  0.120855670
+11  10  0.023372939
+12  11 -0.050519991
+13  12 -0.306134143
+14  13 -0.034941770
+15  14 -0.135607571
+16  15 -0.007879896
+17  16 -0.013596657
+18  17  0.068457801
+19  18 -0.068339580
+20  19  0.108825733
+21  20 -0.016183269
+22  21  0.049987789
+23  22  0.072442123
+24  23  0.069243554
+25  24 -0.119693815
+26  25  0.086752236
+27  26  0.121147444
+28  27  0.009948542
+29  28 -0.015218938
+30  29 -0.020746444
+31  30 -0.007395530
+32  31 -0.119756433
+33  32 -0.034923800
+34  33 -0.159559590
+35  34 -0.128983657
+36  35 -0.204309908
+37  36 -0.007202905
+38  37 -0.268197743
+39  38 -0.096226749
+40  39 -0.119713464
+41  40 -0.090518001
+42  41 -0.067523191
+43  42  0.011752367
+44  43 -0.053094612
+45  44 -0.015964919
+46  45  0.029552898
+47  46 -0.023393707
+48  47  0.143933995
+49  48  0.034671143
+50  49  0.106994669
+51  50 -0.051006134
+52  51  0.070198451
+53  52  0.104277207
+54  53  0.045477309
+55  54 -0.030841092
+56  55  0.067923958
+57  56 -0.076284995
+58  57 -0.072577446
+59  58 -0.057301505
+60  59 -0.150368584
+61  60 -0.096999389
+Houve 42 avisos (use warnings() para vê-los)
+> Fig.pacf <- ggplot(data = Fig.3, mapping = aes(x = lag, y = acf)) +
++   geom_hline(aes(yintercept = 0)) +
++   geom_segment(mapping = aes(xend = lag, yend = 0), size=2)+
++   ggtitle("FACP da primeira diferença") +
++   xlab(expression(italic(h)))+
++   ylab(expression(paste(phi)[italic(hh)]))+
++   theme(text=element_text(family="Times New Roman",size=21,colour="black")
++         ,axis.title.y=element_text(family="Times New Roman",angle=90,size=22, 
++                                    colour="black", vjust=0.5, margin=margin(t = 0, r = 15, b = 0, l = 0,
++                                                                             unit = "pt")),axis.title.x = element_text(family = "Times New Roman",
++                                                                                                                       vjust=-1.5, margin=margin(t = 0, r = 0, b = 15, l = 0,  unit = "pt"))
++         ,plot.title = element_text(family = "Times New Roman", hjust = 0.5,
++                                    colour="black")) 
+> Fig.pacf + geom_hline(aes(yintercept =  conf.lim), linetype="dotted", 
++                       size = 2, color = "red") +
++   geom_hline(aes(yintercept = -conf.lim), linetype="dotted", 
++              size = 2, color = "red") 
+Houve 24 avisos (use warnings() para vê-los)
+> # ========================================================================
+Houve 46 avisos (use warnings() para vê-los)
+> # Treinamento
+> # ------------------------------------------
+> n.size          <- dim(t.mensal)[1]
+> 
